@@ -20,6 +20,7 @@ from app.schemas.calculation import CalculationBase, CalculationResponse, Calcul
 from app.schemas.token import TokenResponse
 from app.schemas.user import UserCreate, UserResponse, UserLogin
 from app.database import Base, get_db, engine
+from app.routes.auth import router as auth_router
 
 
 # Create tables on startup
@@ -263,6 +264,8 @@ def delete_calculation(
     db.delete(calculation)
     db.commit()
     return None
+
+app.include_router(auth_router)
 
 # ------------------------------------------------------------------------------
 # Main Block to Run the Server
