@@ -265,7 +265,7 @@ def delete_calculation(
     db.commit()
     return None
 
-app.include_router(auth_router)
+app.include_router(auth_router, prefix="/auth")
 
 # ------------------------------------------------------------------------------
 # Main Block to Run the Server
