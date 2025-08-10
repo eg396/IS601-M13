@@ -106,11 +106,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Helper function to validate password strength
     function isValidPassword(password) {
-        return password.length >= 8 && // at least 8 characters
-               /[A-Z]/.test(password) && // at least one uppercase
-               /[a-z]/.test(password) && // at least one lowercase
-               /[0-9]/.test(password); // at least one number
-    }
+        const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/;
+        return password.length >= 8 &&             // at least 8 characters
+            /[A-Z]/.test(password) &&              // at least one uppercase letter
+            /[a-z]/.test(password) &&              // at least one lowercase letter
+            /[0-9]/.test(password) &&              // at least one number
+            specialCharRegex.test(password);       // at least one special character
+}
 
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
