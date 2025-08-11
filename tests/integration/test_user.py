@@ -17,15 +17,18 @@ from tests.conftest import create_fake_user, managed_db_session
 # Use the logger configured in conftest.py
 logger = logging.getLogger(__name__)
 
+
+
+
 # ======================================================================================
 # Basic Connection & Session Tests
 # ======================================================================================
 
 def test_database_connection(db_session):
     """
-    Verify that the database connection is working.
+    #Verify that the database connection is working.
     
-    Uses the db_session fixture from conftest.py, which truncates tables after each test.
+    #Uses the db_session fixture from conftest.py, which truncates tables after each test.
     """
     result = db_session.execute(text("SELECT 1"))
     assert result.scalar() == 1
@@ -34,8 +37,8 @@ def test_database_connection(db_session):
 
 def test_managed_session():
     """
-    Test the managed_db_session context manager for one-off queries and rollbacks.
-    Demonstrates how a manual session context can work alongside the fixture-based approach.
+    #Test the managed_db_session context manager for one-off queries and rollbacks.
+    #Demonstrates how a manual session context can work alongside the fixture-based approach.
     """
     with managed_db_session() as session:
         # Simple query
@@ -52,11 +55,11 @@ def test_managed_session():
 # ======================================================================================
 def test_session_handling(db_session):
     """
-    Demonstrate partial commits:
-      - user1 is committed successfully.
-      - user2 fails (due to duplicate email), triggering a rollback.
-      - user3 is committed successfully.
-      - The final user count should be the initial count plus two (user1 and user3).
+    #Demonstrate partial commits:
+    #  - user1 is committed successfully.
+    #  - user2 fails (due to duplicate email), triggering a rollback.
+    #  - user3 is committed successfully.
+    #  - The final user count should be the initial count plus two (user1 and user3).
     """
     # Use the current user count as our baseline.
     initial_count = db_session.query(User).count()
@@ -112,7 +115,7 @@ def test_session_handling(db_session):
 
 def test_create_user_with_faker(db_session):
     """
-    Create a single user using Faker-generated data and verify it was saved.
+    #Create a single user using Faker-generated data and verify it was saved.
     """
     user_data = create_fake_user()
     logger.info(f"Creating user with data: {user_data}")
@@ -129,7 +132,7 @@ def test_create_user_with_faker(db_session):
 
 def test_create_multiple_users(db_session):
     """
-    Create multiple users in a loop and verify they are all saved.
+    #Create multiple users in a loop and verify they are all saved.
     """
     users = []
     for _ in range(3):
@@ -148,11 +151,11 @@ def test_create_multiple_users(db_session):
 
 def test_query_methods(db_session, seed_users):
     """
-    Illustrate various query methods using seeded users.
+    #Illustrate various query methods using seeded users.
     
-    - Counting all users
-    - Filtering by email
-    - Ordering by email
+    #- Counting all users
+    #- Filtering by email
+    #- Ordering by email
     """
     user_count = db_session.query(User).count()
     assert user_count >= len(seed_users), "The user table should have at least the seeded users"
@@ -170,10 +173,10 @@ def test_query_methods(db_session, seed_users):
 
 def test_transaction_rollback(db_session):
     """
-    Demonstrate how a partial transaction fails and triggers rollback.
-    - We add a user and force an error
-    - We catch the error and rollback
-    - Verify the user was not committed
+    #Demonstrate how a partial transaction fails and triggers rollback.
+    #- We add a user and force an error
+    #- We catch the error and rollback
+    #- Verify the user was not committed
     """
     initial_count = db_session.query(User).count()
     
@@ -196,7 +199,7 @@ def test_transaction_rollback(db_session):
 
 def test_update_with_refresh(db_session, test_user):
     """
-    Update a user's email and refresh the session to see updated fields.
+    #Update a user's email and refresh the session to see updated fields.
     """
     original_email = test_user.email
     original_update_time = test_user.updated_at
