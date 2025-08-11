@@ -20,7 +20,7 @@ from app.schemas.calculation import CalculationBase, CalculationResponse, Calcul
 from app.schemas.token import TokenResponse
 from app.schemas.user import UserCreate, UserResponse, UserLogin
 from app.database import Base, get_db, engine
-from app.routes.auth import router as auth_router
+from app.auth.routes import router as auth_router
 
 
 # Create tables on startup
